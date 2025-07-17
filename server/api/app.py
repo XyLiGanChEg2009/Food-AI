@@ -44,19 +44,25 @@ def get_products():
 def get_product_by_id():
     #query = request.args.get("query")
     prodId = request.args.get("id")
-    if isinstance(prodId, int):
-        print("xuy")
-        response = app.response_class(
-            response=json.dumps(db.get_product_by_id(prodId)),
-            status=200,
-            mimetype='application/json'
-        )
-        return response
-    else:
-        return {"status": "error", "message": "Введено число типа отличного от int"}
+    
+    if id is None:
+        app.logger.error("Id is none")
+        return jsonify({"error": "id is none"}), 400
+    
+    if not isinstance(id, int):
+        app.logger.error("Id type should be int")
+        return jsonify({"error": "Id type should be int"}), 400
+    
+    print("xuy")
+    response = app.response_class(
+        response=json.dumps(db.get_product_by_id(prodId)),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 @app.route("/add_product", methods=["POST"])
-def add_products():
+def add_product():
     try:
         prod = request.get_json()
         app.logger.debug(f"Recived JSON data: {prod}")
@@ -95,7 +101,8 @@ def add_products():
           return jsonify({"message": "Product added successfully"}), 200 
         else:
           app.logger.error("Failed to add product to the database")
-          return jsonify({"error": "Failed to add product"}), 500 
+          return jsonify({"error": "Failed to add product"}), 500
+       
     except json.JSONDecodeError:
         app.logger.warning("Invalid JSON format received")
         return jsonify({"error": "Invalid JSON format"}), 400
