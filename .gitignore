@@ -1,0 +1,13 @@
+/trained_model.zip
+/result.txt
+/server/__pycache__
+/server/api/__pycache__
+/server/model/__pycache__
+/alembic.ini
+*.env
+/.venv
+/alembic
+/server/model/trained_model
+/server/main.py
+/server/output.py
+/server/test.py

@@ -30,7 +30,8 @@ CREATE TABLE public.foodcard (
     img_src text NOT NULL,
     price integer NOT NULL,
     weight integer NOT NULL,
-    name text NOT NULL
+    name text NOT NULL,
+    keys text[]
 );
 
 

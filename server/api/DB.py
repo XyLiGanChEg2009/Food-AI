@@ -13,11 +13,10 @@ class DB():
         self.cur = self.conn.cursor()
 
 
-    def add_product(self, img_src: str, price: int, weight: int, name: str):
+    def add_product(self, img_src: str, price: int, weight: int, name: str, keys: list = []):
         try:
-            print(img_src, price, weight, name)
-            sql = "INSERT INTO foodCard (img_src, price, weight, name) VALUES (%s, %s, %s, %s)"
-            values = (img_src, price, weight, name)
+            sql = "INSERT INTO foodCard (img_src, price, weight, name, keys) VALUES (%s, %s, %s, %s, %s)"
+            values = (img_src, price, weight, name, keys)
             self.cur.execute(sql, values)
             self.conn.commit()
             return {"status": "ok"}
@@ -27,14 +26,21 @@ class DB():
 
 
     def get_products(self):
-        Product = namedtuple('Product', ['id', 'img_src', 'price', 'weight', 'name'])
+        Product = namedtuple('Product', ['id', 'img_src', 'price', 'weight', 'name', 'keys'])
         self.cur.execute("SELECT * FROM foodCard")
         response = self.cur.fetchall()
         products = [Product(*item)._asdict() for item in response]
         return products
     
+    def get_products_by_keys(self, keys: list):
+        Product = namedtuple('Product', ['id', 'img_src', 'price', 'weight', 'name', 'keys'])
+        self.cur.execute("SELECT * FROM foodCard WHERE keys @> %s", (keys,))
+        response = self.cur.fetchall()
+        products = [Product(*item)._asdict() for item in response]
+        return products
+    
     def get_product_by_id(self, id):
-        Product = namedtuple('Product', ['id', 'img_src', 'price', 'weight', 'name'])
+        Product = namedtuple('Product', ['id', 'img_src', 'price', 'weight', 'name', 'keys'])
         sql = "SELECT * FROM foodCard WHERE id = %s"
         self.cur.execute(sql, id)
         response = self.cur.fetchall()
