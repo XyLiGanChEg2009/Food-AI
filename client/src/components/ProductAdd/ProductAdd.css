@@ -1,0 +1,52 @@
+.product_add_container {
+    position: absolute;
+}
+
+.product_add_open_button {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 11;
+}
+
+.product_add_form {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: #303030;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 5);
+    z-index: 10;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    scale: 0;
+    transition: .5s;
+}
+
+.product_add_form_open {
+    scale: 1;
+    transition: .5s;
+}
+
+.product_add_form_push_button {
+    width: 43px;
+}
+
+.product_add_form_input {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28);
+    padding: 8px 8px 10px 18px;
+    font-size: 1.3em;
+    font-weight: 500;
+    margin: 0 5px 0;
+    transition: .15s;
+    z-index: 3;
+    background: #303030;
+    color: orange;
+}
+
