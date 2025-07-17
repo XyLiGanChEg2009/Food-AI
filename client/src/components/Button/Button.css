@@ -1,0 +1,18 @@
+.default_button {
+    font-size: 1.3em;
+    cursor: pointer;
+    border: none;
+    padding: 8px 10px 6px;
+    background: transparent;
+    transition: .5s;
+    border-radius: 50%;
+}
+
+.default_button:hover {
+    background-color: #272727;
+}
+
+
+.default_button:active {
+    background: orange;
+}

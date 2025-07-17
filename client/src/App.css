@@ -1,0 +1,31 @@
+body {
+    background: #303030;
+    margin: 10px 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.product_list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+h1{
+    text-align: center;
+    color: white;
+}
+
+input:focus{
+    outline: none;
+}
+
+.svg-inline--fa {
+    color: orange;
+}
+
+.responseError {
+    color: orangered;
+}
+
+.response {
+    color: chartreuse;
+}
