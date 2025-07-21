@@ -22,8 +22,8 @@ function App() {
     };
 
     const fetchProducts = async () => {
-        // const response = await server.getProducts(query);
-        // setProducts(response);
+        const response = await server.getProducts(query);
+        setProducts(response);
     }
 
     useEffect(() => {
