@@ -23,18 +23,18 @@
 .search_button {
     position: absolute;
     z-index: 2;
-    margin-left: 200px;
+    margin-left: 270px;
     scale: .1;
 }
 
-.search_input:focus{
+.search_input:focus {
     scale: 1.05;
     transition: .15s;
     margin-right: 10px;
 }
 
-.search_input:focus ~ .search_button {
-    margin-left: 345px;
+.search_input:focus ~ .search_button, .search_button:active {
+    margin-left: 385px;
     scale: 1.2;
     transition: .3s;
 }
