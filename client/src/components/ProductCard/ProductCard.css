@@ -4,7 +4,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 10px;
     margin: 0 10px 15px 0;
-    width: 180px;
+    width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,14 +28,14 @@
 }
 
 .card_price {
-    font-size: 1.4em;
+    font-size: 24px;
     color: white;
     font-weight: 500;
     margin-bottom: 2px;
 }
 
 .card_name {
-    font-size: 1.4em;
+    font-size: 16px;
     color: white;
     margin: 0 0 10px 0;
     line-height: 1.2;
@@ -44,8 +44,33 @@
 .card_weight {
     font-size: 0.85em;
     color: gray;
+    margin-bottom: 15px;
 }
 
 .card_keys {
     color: white;
+    font-size: 0.8em;
+    margin-top: auto;
+}
+
+.card_name, .card_price, .card_weight, .card_keys {
+    align-self: start;
+    margin-left: 5px;
+}
+
+.card_add_product_button {
+    color: white;
+    width: 100%;
+    background: #303030 !important;
+    border-radius: 10px !important;
+    transition: .15s !important;
+    margin-bottom: 15px;
+}
+
+.card_add_product_button:hover {
+    background-color: #292929 !important;
+}
+
+.card_add_product_button:active {
+    background: rgba(112, 83, 42, 0.8) !important;
 }

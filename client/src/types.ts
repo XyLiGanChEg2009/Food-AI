@@ -1,5 +1,6 @@
 export type Response = {
     status: "ok" | "error";
+    message?: string;
 }
 
 export type Product = {

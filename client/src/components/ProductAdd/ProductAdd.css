@@ -20,20 +20,23 @@
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 5);
     z-index: 10;
-    top: 40%;
     left: 50%;
-    transform: translate(-50%, -40%);
-    scale: 0;
-    transition: .5s;
+    top: -200%;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    transition: .6s;
+    will-change: top, left, transform;
 }
 
 .product_add_form_open {
+    top: 350%;
+    left: 50%;
     scale: 1;
-    transition: .5s;
+    transition: .6s;
 }
 
 .product_add_form_push_button {
-    width: 43px;
+    width: 40px;
 }
 
 .product_add_form_input {
@@ -50,3 +53,7 @@
     color: orange;
 }
 
+.product_add_open_button_icon {
+    transform: rotate(45deg);
+    transition: .5s;
+}

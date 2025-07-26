@@ -12,7 +12,6 @@
     background-color: #272727;
 }
 
-
 .default_button:active {
-    background: orange;
+    background: rgba(112, 83, 42, 0.8);
 }

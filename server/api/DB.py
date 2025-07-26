@@ -6,7 +6,7 @@ class DB():
         self.conn = psycopg2.connect(
         dbname="foodAi",
         user="postgres",
-        password="12345678",
+        password="sshv6yb76t9348765vb7nyioe45",
         host="localhost",
         port="5432"
         )
@@ -34,7 +34,7 @@ class DB():
     
     def get_products_by_keys(self, keys: list):
         Product = namedtuple('Product', ['id', 'img_src', 'price', 'weight', 'name', 'keys'])
-        self.cur.execute("SELECT * FROM foodCard WHERE keys @> %s", (keys,))
+        self.cur.execute("SELECT * FROM foodCard WHERE keys && %s", (keys,))
         response = self.cur.fetchall()
         products = [Product(*item)._asdict() for item in response]
         return products

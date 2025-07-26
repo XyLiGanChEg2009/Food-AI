@@ -14,13 +14,16 @@ const ProductAdd = () => {
 
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
     const [product, setProduct] = useState<Product>(
-        {name: "", img_src: "", weight: 250, price: 500}
+        {name: "", img_src: "", weight: 0, price: 0, keys: []}
     );
     const [responseMessage, setResponseMessage] = useState<string>("");
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const id = event.target.id;
         setProduct(prevState => {
+            if (id === "keys") {
+                return {...prevState, [id]: event.target.value.split(" ")};
+            }
             if (id === "weight" || id === "price") {
                 return {...prevState, [id]: Number(event.target.value)};
             }
@@ -29,16 +32,21 @@ const ProductAdd = () => {
     };
 
     const fetchAddProduct = async () => {
-        setResponseMessage("");
-        const response: Response = await server.addProduct(product);
-        setResponseMessage(response.status === "ok" ? "Product added" : "Product add error");
+        if (!product.name || !product.img_src || !product.weight || !product.price) {
+            setResponseMessage("Error. Please fill in all fields.");
+        } else {
+            setResponseMessage("");
+            const response: Response = await server.addProduct(product);
+            setProduct({name: "", img_src: "", weight: 0, price: 0, keys: []});
+            setResponseMessage(response.status === "ok" ? "Product added" : "Product add error");
+        }
     }
 
     return (
         <div>
             <div className="product_add_container">
                 <Button className="product_add_open_button" onClick={() => setModalIsOpen(!modalIsOpen)}>
-                    <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+                    <FontAwesomeIcon className={modalIsOpen ? "product_add_open_button_icon" : ""} icon={faPlus}></FontAwesomeIcon>
                 </Button>
             </div>
 
@@ -51,12 +59,12 @@ const ProductAdd = () => {
                        className="product_add_form_input" type="text"/>
                 <input onChange={(event) => handleInputChange(event)} id="price" placeholder="price"
                        className="product_add_form_input" type="text"/>
-                {/*<input onChange={(event) => handleInputChange(event)} id="keys" placeholder="keys"*/}
-                {/*       className="product_add_form_input" type="text"/>*/}
+                <input onChange={(event) => handleInputChange(event)} id="keys" placeholder="keys"
+                       className="product_add_form_input" type="text"/>
                 <Button className="product_add_form_push_button" onClick={() => fetchAddProduct()}>
                     <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
                 </Button>
-                {modalIsOpen && <span className={responseMessage === "Product add error" ? "responseError" : "responseSuccess"}>{responseMessage}</span>}
+                {modalIsOpen && <span className={responseMessage.toLowerCase().includes("error") ? "responseError" : "responseSuccess"}>{responseMessage}</span>}
             </div>
 
         </div>

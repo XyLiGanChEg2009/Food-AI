@@ -37,6 +37,8 @@ def get_products():
             app.logger.error("Neuro doesnt answer")
             return jsonify({"status": "error", "message": "Neuro doesnt answer"})
          
+        print(keys)
+
         response = db.get_products_by_keys(keys)
         return jsonify(response)
 
@@ -97,7 +99,7 @@ def add_product():
           return jsonify({"status": "ok", "message": "Product added successfully"}), 200 
         else:
           app.logger.error("Failed to add product to the database")
-          return jsonify({"status": "error", "message": f"{result["message"]}"}), 500
+          return jsonify({"status": "error", "message": f"{result['message']}"}), 500
        
     except json.JSONDecodeError:
         app.logger.warning("Invalid JSON format received")

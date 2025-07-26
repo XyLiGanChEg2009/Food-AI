@@ -10,4 +10,4 @@
 /server/model/trained_model
 /server/main.py
 /server/output.py
-/server/test.py
+/server/model/test.py
