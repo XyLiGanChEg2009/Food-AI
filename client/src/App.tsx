@@ -1,10 +1,11 @@
-import { useState, createContext, useEffect, ChangeEvent } from 'react';
+import React, { useState, createContext, useEffect, ChangeEvent } from 'react';
 import { Server } from "./modules/Server/Server";
 
 import ProductCard from './components/ProductCard/ProductCard';
 import Search from './components/Search/Search';
 import ProductAdd from "./components/ProductAdd/ProductAdd";
 import List from "./components/List/List";
+import {Cart} from "./components/Cart/Cart";
 
 import {Product} from "./types";
 
@@ -34,9 +35,9 @@ function App() {
         setProducts(response);
     }
 
-    useEffect(() => {
-        // fetchProducts();
-    }, [])
+    // useEffect(() => {
+    //     fetchProducts();
+    // }, [])
 
     return (
         <ServerContext value={server}>
@@ -45,20 +46,28 @@ function App() {
                     <ProductAdd/>
                     <h1 className="service_name">Поиск еды</h1>
                     <Search handleInputChange={handleInputChange} fetchProducts={fetchProducts}></Search>
+                    <Cart cart={cart} setCart={setCart}/>
                 </header>
 
                 <div className="main">
-                    <List
-                        items={products}
-                        className="product_list"
-                        renderItem={(product: Product) =>
-                            <ProductCard
-                                product={product}
-                                addProductToCart={addProductToCart}
-                                key={product.name}
-                            />
-                        }
-                    />
+                    {
+                    products.length ?
+                        <List
+                            items={products}
+                            className="product_list"
+                            renderItem={(product: Product) =>
+                                <ProductCard
+                                    product={product}
+                                    addProductToCart={addProductToCart}
+                                    key={product.name}
+                                />
+                            }
+                        />
+                    :
+                        <div className="product_not_found_container">
+                            <span className="product_not_found_message">По вашему запросу ничего не нашлось :(</span>
+                        </div>
+                    }
                 </div>
             </div>
         </ServerContext>

@@ -43,7 +43,7 @@ const ProductAdd = () => {
     }
 
     return (
-        <div>
+        <>
             <div className="product_add_container">
                 <Button className="product_add_open_button" onClick={() => setModalIsOpen(!modalIsOpen)}>
                     <FontAwesomeIcon className={modalIsOpen ? "product_add_open_button_icon" : ""} icon={faPlus}></FontAwesomeIcon>
@@ -67,7 +67,7 @@ const ProductAdd = () => {
                 {modalIsOpen && <span className={responseMessage.toLowerCase().includes("error") ? "responseError" : "responseSuccess"}>{responseMessage}</span>}
             </div>
 
-        </div>
+        </>
     );
 };
 

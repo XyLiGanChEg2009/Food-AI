@@ -1,0 +1,36 @@
+.cart_counter {
+    position: absolute;
+    color: white;
+    border-radius: 12px;
+    border: 2px solid #303030;
+    padding: 1px 5px 0 4px;
+    background: orange;
+    font-size: 13px;
+    margin-top: -8px;
+    margin-left: -5px;
+}
+
+.cart_counter.zero {
+    display: none;
+}
+
+.cart_modal_container {
+    position: absolute;
+    z-index: 100;
+    height: calc(100vh - 300px);
+    width: 350px;
+    right: 45px;
+    top: 90px;
+    transition: .5s;
+    padding: 10px;
+    background: #303030;
+    border-radius: 12px;
+    overflow: auto;
+}
+
+.cart_product_list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: auto;
+}

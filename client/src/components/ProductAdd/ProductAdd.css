@@ -1,9 +1,12 @@
 .product_add_container {
     position: absolute;
+    left: 250px;
 }
 
 .product_add_open_button {
     position: absolute;
+    top: 0;
+    left: 0;
     border-radius: 50%;
     z-index: 11;
 }
@@ -21,7 +24,7 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 5);
     z-index: 10;
     left: 50%;
-    top: -200%;
+    top: -220%;
     transform: translate(-50%, -50%);
     margin: 0 auto;
     transition: .6s;
@@ -29,7 +32,7 @@
 }
 
 .product_add_form_open {
-    top: 350%;
+    top: 500%;
     left: 50%;
     scale: 1;
     transition: .6s;

@@ -4,24 +4,40 @@
     box-sizing: border-box;
 }
 
+img {
+    user-select: none;
+}
+
 body {
     background: #202020;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     background: #202020;
-    padding: 10px 5px 1px;
+    padding: 20px 20px 1px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    display: block;
 }
 
 .service_name {
     margin-bottom: 10px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.search_container {
+    margin-right: 310px;
+}
+
+.cart_container {
+    margin-right: 20px;
 }
 
 .product_list {
@@ -31,7 +47,7 @@ header {
 }
 
 .main {
-    margin-top: 140px;
+    margin-top: 110px;
 }
 
 h1{
@@ -57,4 +73,19 @@ input:focus{
 
 .fa-plus {
     transition: .5s;
+}
+
+.product_not_found_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    margin: 0 32vw;
+    border-radius: 20px;
+    background: #252525;
+}
+
+.product_not_found_message {
+    color: #676666;
+    font-size: 110%;
 }

@@ -4,7 +4,6 @@ export class Server {
     HOST: string;
     constructor() {
         this.HOST = "http://127.0.0.1:1337/";
-
     }
 
     async getProducts(query: string): Promise<Product[]> {
