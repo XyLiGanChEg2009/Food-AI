@@ -7,7 +7,7 @@ import ProductAdd from "./components/ProductAdd/ProductAdd";
 import List from "./components/List/List";
 import {Cart} from "./components/Cart/Cart";
 
-import {Product} from "./types";
+import {CartItem, Product} from "./types";
 
 import './App.css';
 
@@ -16,7 +16,7 @@ export const ServerContext = createContext<Server>(null!);
 function App() {
     const [query, setQuery] = useState<string>("");
     const [products, setProducts] = useState<Product[]>([]);
-    const [cart, setCart] = useState<Product[]>([]);
+    const [cart, setCart] = useState<CartItem[]>([]);
 
     const server = new Server();
 
@@ -24,20 +24,43 @@ function App() {
         setQuery(event.target.value);
     };
 
+    // [backend] Надо будет заменить название на id продукта из БД
     const addProductToCart = (product: Product) => {
         setCart(prevState => {
-            return [...prevState, product];
+            if (prevState.some(item => item.product.name === product.name)) {
+                return prevState.map(item => {
+                    if (item.product.name === product.name) {
+                        return { ...item, count: item.count + 1 };
+                    }
+                    return item;
+                });
+            } else {
+                return [...prevState, {product: product, count: 1}]
+            }
         });
     }
+    // [backend] Надо будет заменить название на id продукта из БД
+    const removeProductFromCart = (product: Product) => {
+        setCart(prevState => {
+            return prevState.reduce((acc, item) => {
+                if (item.product.name !== product.name) {
+                    acc.push(item);
+                } else if (item.count > 1) {
+                    acc.push({ ...item, count: item.count - 1 });
+                }
+                return acc;
+            }, [] as CartItem[]);
+        });
+    };
 
     const fetchProducts = async () => {
         const response = await server.getProducts(query);
         setProducts(response);
     }
 
-    // useEffect(() => {
-    //     fetchProducts();
-    // }, [])
+    useEffect(() => {
+        fetchProducts();
+    }, [])
 
     return (
         <ServerContext value={server}>
@@ -46,7 +69,7 @@ function App() {
                     <ProductAdd/>
                     <h1 className="service_name">Поиск еды</h1>
                     <Search handleInputChange={handleInputChange} fetchProducts={fetchProducts}></Search>
-                    <Cart cart={cart} setCart={setCart}/>
+                    <Cart cart={cart} setCart={setCart} addProductToCart={addProductToCart} removeProductFromCart={removeProductFromCart}/>
                 </header>
 
                 <div className="main">

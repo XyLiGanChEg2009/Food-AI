@@ -18,11 +18,11 @@
     position: absolute;
     z-index: 100;
     height: calc(100vh - 300px);
-    width: 350px;
+    width: 400px;
     right: 45px;
     top: 90px;
     transition: .5s;
-    padding: 10px;
+    padding: 12px 20px;
     background: #303030;
     border-radius: 12px;
     overflow: auto;
@@ -33,4 +33,22 @@
     flex-direction: column;
     justify-content: center;
     overflow: auto;
+}
+
+.cart_modal_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.cart_modal_name {
+    color: white;
+    font-size: 2em;
+}
+
+.cart_modal_clear {
+    color: gray;
+    font-size: 1em;
+    border-radius: 12px;
 }

@@ -10,3 +10,8 @@ export type Product = {
     weight: number;
     keys?: string[];
 }
+
+export type CartItem = {
+    product: Product;
+    count: number;
+}

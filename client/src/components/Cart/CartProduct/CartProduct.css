@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 10px;
+    padding: 10px 0;
     border-radius: 10px;
     position: relative;
 }
@@ -45,4 +45,9 @@
     padding: 1px;
     border-radius: 12px;
     background: #292929;
+}
+
+.product_count {
+    color: white;
+    font-size: 1.2em;
 }

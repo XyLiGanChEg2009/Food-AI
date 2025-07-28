@@ -1,6 +1,7 @@
 .product_add_container {
     position: absolute;
     left: 250px;
+    top: 14px;
 }
 
 .product_add_open_button {
@@ -24,7 +25,7 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 5);
     z-index: 10;
     left: 50%;
-    top: -220%;
+    top: -300%;
     transform: translate(-50%, -50%);
     margin: 0 auto;
     transition: .6s;

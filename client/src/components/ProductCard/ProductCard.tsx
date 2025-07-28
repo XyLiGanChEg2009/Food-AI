@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Product } from "../../types";
+import {CartItem, Product} from "../../types";
 
 import Button from "../Button/Button";
 

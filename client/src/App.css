@@ -17,17 +17,18 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     background: #202020;
-    padding: 20px 20px 1px;
+    padding: 6px 20px 1px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
 .service_name {
-    margin-bottom: 10px;
+    margin-bottom: 3px;
     user-select: none;
     cursor: pointer;
 }

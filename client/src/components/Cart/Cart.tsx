@@ -1,22 +1,24 @@
-import {FC, useState} from "react";
+import {FC, useState, memo} from "react";
 
 import Button from "../Button/Button";
 import List from "../List/List";
+import CartProduct from "./CartProduct/CartProduct";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
-import {Product} from "../../types";
+import {CartItem, Product} from "../../types";
 
 import "./Cart.css";
-import {CartProduct} from "./CartProduct/CartProduct";
 
 interface CartProps {
-    cart: Product[];
-    setCart: (cart: Product[]) => void;
+    cart: CartItem[];
+    setCart: (cart: CartItem[]) => void;
+    addProductToCart: (product: Product) => void;
+    removeProductFromCart: (product: Product) => void;
 }
 
-export const Cart: FC<CartProps> = ({cart, setCart}) => {
+export const Cart: FC<CartProps> = memo(({cart, setCart, addProductToCart, removeProductFromCart}) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const modalOpenChangeHandler = () => {
@@ -25,9 +27,9 @@ export const Cart: FC<CartProps> = ({cart, setCart}) => {
         }
     }
 
-    // [backend] Надо будет заменить название на id продукта из БД
-    const removeProduct = (name: string) => {
-        setCart(cart.filter((product) => product.name !== name));
+    const clearCart = () => {
+        setCart([]);
+        setModalOpen(false);
     }
 
     return (
@@ -39,15 +41,21 @@ export const Cart: FC<CartProps> = ({cart, setCart}) => {
                 </Button>
             </div>
             {modalOpen && <div className="cart_modal_container">
+                <div className="cart_modal_header">
+                    <div className="cart_modal_name">Корзинка</div>
+                    <Button onClick={() => clearCart()} className="cart_modal_clear">Очистить</Button>
+                </div>
                 <List
                     items={cart}
-                    renderItem={(product) => <CartProduct
-                        product={product}
-                        removeProduct={removeProduct}
+                    renderItem={(cartItem) => <CartProduct
+                        cartItem={cartItem}
+                        removeProductFromCart={removeProductFromCart}
+                        addProductToCart={addProductToCart}
+                        key={cartItem.product.name} // надо будет поменять на id
                     />}
                     className="cart_product_list"
                 />
             </div>}
         </>
     );
-};
+});
