@@ -5,11 +5,14 @@ from torch.nn import BCEWithLogitsLoss
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 from collections import defaultdict
+import json
 
 from output import log, init_log
 
 from config import *
-from dataset import training_data, validation_dataset
+
+
+training_data = json.load(open("dataset.json", encoding="utf-8"))
 
 init_log()
 

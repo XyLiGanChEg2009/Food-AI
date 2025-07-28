@@ -1,8 +1,9 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import json
 
-from dataset import training_data
 
+training_data = json.load(open("../model/dataset.json", encoding="utf-8"))
 
 training_data = list({frozenset(d["text"]): d for d in training_data}.values())
 
@@ -10,7 +11,7 @@ all_unique_keys = sorted(list(set(key for item in training_data for key in item[
 key_to_id = {key: i for i, key in enumerate(all_unique_keys)}
 id_to_key = {i: key for i, key in enumerate(all_unique_keys)}
 
-model_name = "C:\\Users\\AltzGamer\\Desktop\\M\\Projects\\Практика\\Food-AI\\server\\model\\trained_model"
+model_name = "../trained_model"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 model = AutoModelForSequenceClassification.from_pretrained(model_name)
