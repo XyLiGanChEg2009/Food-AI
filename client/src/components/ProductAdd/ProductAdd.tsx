@@ -8,9 +8,15 @@ import {ServerContext} from "../../App";
 
 import "./ProductAdd.css";
 import {Product, Response} from "../../types";
+import List from "../List/List";
+import KeyItem from "./KeyItem/KeyItem";
+
 
 const ProductAdd = () => {
     const server = useContext(ServerContext);
+
+    const [keys, setKeys] = useState<string[]>(['авторская_кухня', 'азиатская_кухня', 'алкогольные', 'без_лактозы', 'без_сахара', 'безалкогольные', 'безглютеновое', 'бизнес_ланч', 'бургеры', 'быстрое_питание', 'веганское', 'вегетарианское', 'вино', 'восточная_кухня', 'выпечка', 'гарниры', 'горячее', 'горячие_блюда', 'гриль', 'деликатесы', 'десерты', 'детское_меню', 'диабетическое', 'диетическое', 'для_вечеринки', 'для_компании', 'для_одного', 'для_пикника', 'европейская_кухня', 'еда_на_вынос', 'жареное', 'завтрак', 'закуски', 'запеченое', 'здоровая_еда', 'зерновые', 'испанская_кухня', 'итальянская_кухня', 'к_фильму', 'калорийное', 'китайская_кухня', 'комфортная_еда', 'кофе', 'курица', 'лапша', 'легкое', 'лимонады', 'мексиканская_кухня', 'морепродукты', 'мороженое', 'мясное', 'на_работу', 'напитки', 'обед', 'овощи', 'освежающее', 'основные_блюда', 'острое', 'паста', 'перекус', 'пирогидесерты', 'пицца', 'попкорн', 'праздничное', 'рис', 'роллы', 'романтическое', 'русская_кухня', 'рыба', 'салаты', 'свежевыжатые_соки', 'сладкое', 'смузи', 'снеки', 'соки', 'соленое', 'соусы', 'стейк', 'супы', 'суши', 'сыр', 'сытное', 'сэндвичи', 'терраса', 'торты', 'тушеное', 'ужин', 'фастфуд', 'фрукты', 'холодное', 'чай', 'шоколад', 'японская_кухня']);
+    // const [isDropdown, setIsDropdown] = useState<boolean>(false);
 
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
     const [product, setProduct] = useState<Product>(
@@ -42,6 +48,24 @@ const ProductAdd = () => {
         }
     }
 
+    const addKey = (name: string) => {
+        setProduct(prevState => {
+            return {...prevState, keys: [...prevState.keys, name]};
+        });
+        setKeys(prevState => {
+            return prevState.filter(key => key !== name)
+        });
+    }
+
+    const removeKey = (name: string) => {
+        setProduct(prevState => {
+            return {...prevState, keys: prevState.keys.filter((key) => key !== name)};
+        });
+        setKeys(prevState => {
+            return [...prevState, name];
+        });
+    }
+
     return (
         <>
             <div className="product_add_container">
@@ -59,12 +83,31 @@ const ProductAdd = () => {
                        className="product_add_form_input" type="text"/>
                 <input onChange={(event) => handleInputChange(event)} id="price" placeholder="price"
                        className="product_add_form_input" type="text"/>
-                <input onChange={(event) => handleInputChange(event)} id="keys" placeholder="keys"
-                       className="product_add_form_input" type="text"/>
+                <div className="product_add_form_keys_container">
+                    {product.keys.length ?
+                        <ul className="multi_chose_items">
+                            <List items={product.keys}
+                                  renderItem={(key) => <KeyItem isRemove={true} addKey={addKey} removeKey={removeKey}
+                                                                name={key} key={key}/>}
+                            />
+                        </ul>
+                        :
+                        <div className="keys_placeholder">keys</div>
+                    }
+
+                    <div className="product_add_form_keys_dropdown_container">
+                        <ul className="multi_chose_items">
+                            <List items={keys}
+                                  renderItem={(key) => <KeyItem isRemove={false} addKey={addKey} removeKey={removeKey} name={key} key={key}/>}
+                            />
+                        </ul>
+                    </div>
+                </div>
                 <Button className="product_add_form_push_button" onClick={() => fetchAddProduct()}>
                     <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
                 </Button>
-                {modalIsOpen && <span className={responseMessage.toLowerCase().includes("error") ? "responseError" : "responseSuccess"}>{responseMessage}</span>}
+                {modalIsOpen && <span
+                    className={responseMessage.toLowerCase().includes("error") ? "responseError" : "responseSuccess"}>{responseMessage}</span>}
             </div>
 
         </>

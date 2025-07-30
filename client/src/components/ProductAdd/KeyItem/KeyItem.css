@@ -1,0 +1,20 @@
+.chosen_key {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.chosen_key_remove_button {
+    padding: 2px 5px 1px;
+    margin: 0 4px 0 2px;
+    border-radius: 16px;
+}
+
+.chosen_key_name {
+    color: #b6b6b6;
+    font-size: 1.1em;
+}
+
+.chosen_key_icon {
+    width: 14px;
+}

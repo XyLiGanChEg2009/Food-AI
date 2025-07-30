@@ -45,16 +45,17 @@ export const Cart: FC<CartProps> = memo(({cart, setCart, addProductToCart, remov
                     <div className="cart_modal_name">Корзинка</div>
                     <Button onClick={() => clearCart()} className="cart_modal_clear">Очистить</Button>
                 </div>
-                <List
-                    items={cart}
-                    renderItem={(cartItem) => <CartProduct
-                        cartItem={cartItem}
-                        removeProductFromCart={removeProductFromCart}
-                        addProductToCart={addProductToCart}
-                        key={cartItem.product.name} // надо будет поменять на id
-                    />}
-                    className="cart_product_list"
-                />
+                <div className="cart_product_list">
+                    <List
+                        items={cart}
+                        renderItem={(cartItem) => <CartProduct
+                            cartItem={cartItem}
+                            removeProductFromCart={removeProductFromCart}
+                            addProductToCart={addProductToCart}
+                            key={cartItem.product.name} // надо будет поменять на id
+                        />}
+                    />
+                </div>
             </div>}
         </>
     );

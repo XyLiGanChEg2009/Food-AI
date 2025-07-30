@@ -75,17 +75,18 @@ function App() {
                 <div className="main">
                     {
                     products.length ?
-                        <List
-                            items={products}
-                            className="product_list"
-                            renderItem={(product: Product) =>
-                                <ProductCard
-                                    product={product}
-                                    addProductToCart={addProductToCart}
-                                    key={product.name}
-                                />
-                            }
-                        />
+                        <div className="product_list">
+                            <List
+                                items={products}
+                                renderItem={(product: Product) =>
+                                    <ProductCard
+                                        product={product}
+                                        addProductToCart={addProductToCart}
+                                        key={product.name}
+                                    />
+                                }
+                            />
+                        </div>
                     :
                         <div className="product_not_found_container">
                             <span className="product_not_found_message">По вашему запросу ничего не нашлось :(</span>
