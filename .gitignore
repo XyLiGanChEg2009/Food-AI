@@ -11,3 +11,5 @@
 /server/main.py
 /server/output.py
 /server/model/test.py
+server/result.txt
+server/trained_model.zip

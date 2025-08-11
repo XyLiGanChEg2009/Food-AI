@@ -4,6 +4,7 @@ export type Response = {
 }
 
 export type Product = {
+    id?: number;
     name: string;
     img_src: string;
     price: number;

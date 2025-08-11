@@ -1,27 +1,33 @@
-import React, { ChangeEvent, FC } from "react";
+import React, {ChangeEvent, FC, useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
+
+import {useAppDispatch} from "../../hooks/redux";
+import {fetchProducts} from "../../store/reducers/ActionCreators";
 
 import Button from "../Button/Button";
 
 import "./Search.css";
 
-type SearchProps = {
-    handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    fetchProducts: () => void
-}
 
-const Search: FC<SearchProps> = ({handleInputChange, fetchProducts}) => {
+const Search: FC = () => {
+    const dispatch = useAppDispatch();
+
+    const [query, setQuery] = useState<string>("");
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setQuery(event.target.value);
+    };
+
     const keyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.code === "Enter") {
-            fetchProducts();
+            dispatch(fetchProducts(query));
         }
     }
     
     return (
         <div className="search_container">
             <input onKeyDown={(e) => keyDownHandler(e)} className="search_input" type="text" placeholder="Поиск..." onChange={(event) => handleInputChange(event)}/>
-            <Button className={"search_button"} onClick={fetchProducts}>
+            <Button className={"search_button"} onClick={() => dispatch(fetchProducts(query))}>
                 <FontAwesomeIcon icon={faSearch}/>
             </Button>
         </div>

@@ -81,7 +81,7 @@ class DB():
         return products
     
     def get_products_by_keys(self, keys: list):
-        Product = namedtuple('Product', ['id', 'img_src', 'price', 'weight', 'name', 'restaurant_id', 'keys'])
+        Product = namedtuple('Product', ['id', 'img_src', 'price', 'weight', 'name', 'keys', 'restaurant_id'])
         self.cur.execute("SELECT * FROM foodCard WHERE keys && %s", (keys,))
         response = self.cur.fetchall()
         products = [Product(*item)._asdict() for item in response]
