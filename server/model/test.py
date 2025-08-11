@@ -11,7 +11,7 @@ all_unique_keys = sorted(list(set(key for item in training_data for key in item[
 key_to_id = {key: i for i, key in enumerate(all_unique_keys)}
 id_to_key = {i: key for i, key in enumerate(all_unique_keys)}
 
-model_name = "../trained_model"
+model_name = "../model/trained_model"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 model = AutoModelForSequenceClassification.from_pretrained(model_name)
@@ -20,7 +20,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
 
-def predict_food_keys(text, model, tokenizer, id_to_key, key_to_id_map, max_len=128, threshold=0):
+def predict_food_keys(text, model, tokenizer, id_to_key, key_to_id_map, max_len=128, threshold=0.5):
     encoding = tokenizer.encode_plus(
         text,
         add_special_tokens=True,

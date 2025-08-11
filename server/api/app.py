@@ -58,6 +58,18 @@ def get_product_by_id():
     product = jsonify(db.get_product_by_id(prodId))
     return product
 
+@app.route("/get_restaurants", methods=["GET"])
+def get_restaurants():
+    id = request.args.get("id")
+    if not isinstance(id, int) or id is None:
+        return jsonify(db.get_restaurants())
+    else:
+        if id <= 0:
+            app.logger.error("Id should be a positive number")
+            return jsonify({"status": "error", "message": "Id should be a positive number"}), 400
+        
+        return jsonify(db.get_restaurants(id))
+
 @app.route("/add_product", methods=["POST"])
 def add_product():
     try:
@@ -72,8 +84,9 @@ def add_product():
         price = prod["price"]
         weight = prod["weight"]
         keys = prod["keys"]
+        restaurant_id = prod["restaurant_id"]
         
-        if any(item is None for item in [name, img_src, price, weight]):
+        if any(item is None for item in [name, img_src, price, weight, keys, restaurant_id]):
             app.logger.error("Missing required arguments")
             return jsonify({"status": "error", "message": "Missing required arguments"}), 400
         
@@ -81,19 +94,19 @@ def add_product():
             app.logger.error("Name and img_src must be strings")
             return jsonify({"status": "error", "message": "Name and img_src must be strings"}), 400
         
-        if not isinstance(price, int) or not isinstance(weight, int):
-            app.logger.error("Price and weight must be int")
-            return jsonify({"status": "error", "message": "Price and weight must be int"}), 400
+        if not all(isinstance(item, int) for item in [price, weight, restaurant_id]):
+            app.logger.error("Price, weight and restaurant_id must be int")
+            return jsonify({"status": "error", "message": "Price, weight and restaurant_id must be int"}), 400
         
         if not all([name.strip(), img_src.strip()]):
             app.logger.error("Arguments are empty or null")
             return jsonify({"status": "error", "message": "Arguments are empty or null"}), 400
         
-        if price <= 0 or weight <= 0:
-          app.logger.warning("Price and weight must be positive values")
-          return jsonify({"status": "error", "message": "Price and weight must be positive values"}), 400
+        if price <= 0 or weight <= 0 or restaurant_id < 0:
+          app.logger.warning("Price, weight and restaurant_id must be positive values")
+          return jsonify({"status": "error", "message": "Price, weight and restaurant_id must be positive values"}), 400
         
-        result = db.add_product(img_src, price, weight, name, keys)
+        result = db.add_product(img_src, price, weight, name, restaurant_id, keys)
         
         if result["status"] == "ok":
           return jsonify({"status": "ok", "message": "Product added successfully"}), 200 
@@ -104,6 +117,38 @@ def add_product():
     except json.JSONDecodeError:
         app.logger.warning("Invalid JSON format received")
         return jsonify({"status": "error", "message": "Invalid JSON format"}), 400
+
+@app.route("/add_restaurant", methods=["POST"])
+def add_restaurant():
+    try:
+        prod = request.get_json()
+        app.logger.debug(f"Recived JSON data: {prod}")
+        
+        if not isinstance(prod, dict):
+            app.logger.error("Invalid json format recived")
+            return jsonify({"status": "error", "message": "Invalid json format"}), 400
+        name = prod["name"]
+        
+        if not isinstance(name, str):
+            app.logger.error("Name must be strings")
+            return jsonify({"status": "error", "message": "Name must be strings"}), 400
+        
+        if not name.strip():
+            app.logger.error("Arguments are empty or null")
+            return jsonify({"status": "error", "message": "Arguments are empty or null"}), 400
+        
+        result = db.add_restaurants(name)
+        
+        if result["status"] == "ok":
+          return jsonify({"status": "ok", "message": "Product added successfully"}), 200 
+        else:
+          app.logger.error("Failed to add restaraunt to the database")
+          return jsonify({"status": "error", "message": f"{result['message']}"}), 500
+       
+    except json.JSONDecodeError:
+        app.logger.warning("Invalid JSON format received")
+        return jsonify({"status": "error", "message": "Invalid JSON format"}), 400
+    
 
 # @app.route("/add_product", methods=["put"])
 # def update_product_by_id(id):
