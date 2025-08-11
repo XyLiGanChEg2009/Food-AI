@@ -23,10 +23,19 @@ class DB():
             return {"status": "error 500", "message": str(e)}
         
     def get_restaurants(self, id: int = -13):
-        Restaurant = namedtuple('Restaurant', ['id', 'name'])
+        print(id)
         if isinstance(id, int) and id >= 0:
-            sql = "SELECT * FROM Restaurants WHERE id = %s"
-            self.cur.execute(sql, id)
+            sql = '''SELECT
+                r.name AS restaurant_name,
+                json_agg(f.*) AS food_items
+            FROM
+                Restaurants r
+            LEFT JOIN
+                foodcard f ON r.id = f.restaurant_id
+            WHERE r.id = %s
+            GROUP BY
+                r.name;'''
+            self.cur.execute(sql, (id,))
         else:
             sql = """
             SELECT

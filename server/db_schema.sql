@@ -31,7 +31,8 @@ CREATE TABLE public.foodcard (
     price integer NOT NULL,
     weight integer NOT NULL,
     name text NOT NULL,
-    keys text[]
+    keys text[],
+    restaurant_id integer
 );
 
 
@@ -60,10 +61,58 @@ ALTER SEQUENCE public.foodcard_id_seq OWNED BY public.foodcard.id;
 
 
 --
+-- Name: restaurants; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.restaurants (
+    id integer NOT NULL,
+    name text NOT NULL
+);
+
+
+ALTER TABLE public.restaurants OWNER TO postgres;
+
+--
+-- Name: restaurants_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.restaurants_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1;
+
+
+ALTER SEQUENCE public.restaurants_id_seq OWNER TO postgres;
+
+--
+-- Name: restaurants_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.restaurants_id_seq OWNED BY public.restaurants.id;
+
+
+--
 -- Name: foodcard id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.foodcard ALTER COLUMN id SET DEFAULT nextval('public.foodcard_id_seq'::regclass);
+
+
+--
+-- Name: restaurants id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.restaurants ALTER COLUMN id SET DEFAULT nextval('public.restaurants_id_seq'::regclass);
+
+
+--
+-- Name: restaurants Restaurants_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.restaurants
+    ADD CONSTRAINT "Restaurants_pkey" PRIMARY KEY (id);
 
 
 --

@@ -60,15 +60,20 @@ def get_product_by_id():
 
 @app.route("/get_restaurants", methods=["GET"])
 def get_restaurants():
-    id = request.args.get("id")
-    if not isinstance(id, int) or id is None:
+    restId = request.args.get("id")
+    if restId is None:
         return jsonify(db.get_restaurants())
     else:
-        if id <= 0:
+        try:
+            restId = int(restId)
+        except ValueError:
+            app.logger.error("Id should be an integer")
+            return jsonify({"status": "error", "message": "id should be an integer"}), 400
+        if restId <= 0:
             app.logger.error("Id should be a positive number")
             return jsonify({"status": "error", "message": "Id should be a positive number"}), 400
         
-        return jsonify(db.get_restaurants(id))
+        return jsonify(db.get_restaurants(restId))
 
 @app.route("/add_product", methods=["POST"])
 def add_product():
