@@ -4,21 +4,19 @@ import Button from "../Button/Button";
 import List from "../List/List";
 import CartProduct from "./CartProduct/CartProduct";
 
+import {clearCart} from "../../store/reducers/CartSlice";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
-import {CartItem, Product} from "../../types";
-
 import "./Cart.css";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 
-interface CartProps {
-    cart: CartItem[];
-    setCart: (cart: CartItem[]) => void;
-    addProductToCart: (product: Product) => void;
-    removeProductFromCart: (product: Product) => void;
-}
 
-export const Cart: FC<CartProps> = memo(({cart, setCart, addProductToCart, removeProductFromCart}) => {
+export const Cart: FC = memo(() => {
+    const dispatch = useAppDispatch();
+    const {cart} = useAppSelector(state => state.cartReducer)
+
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const modalOpenChangeHandler = () => {
@@ -27,8 +25,8 @@ export const Cart: FC<CartProps> = memo(({cart, setCart, addProductToCart, remov
         }
     }
 
-    const clearCart = () => {
-        setCart([]);
+    const handleClearCart = () => {
+        dispatch(clearCart());
         setModalOpen(false);
     }
 
@@ -43,16 +41,14 @@ export const Cart: FC<CartProps> = memo(({cart, setCart, addProductToCart, remov
             {modalOpen && <div className="cart_modal_container">
                 <div className="cart_modal_header">
                     <div className="cart_modal_name">Корзинка</div>
-                    <Button onClick={() => clearCart()} className="cart_modal_clear">Очистить</Button>
+                    <Button onClick={() => handleClearCart()} className="cart_modal_clear">Очистить</Button>
                 </div>
                 <div className="cart_product_list">
                     <List
                         items={cart}
                         renderItem={(cartItem) => <CartProduct
                             cartItem={cartItem}
-                            removeProductFromCart={removeProductFromCart}
-                            addProductToCart={addProductToCart}
-                            key={cartItem.product.name} // надо будет поменять на id
+                            key={cartItem.product.id}
                         />}
                     />
                 </div>

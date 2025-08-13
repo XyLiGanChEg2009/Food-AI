@@ -91,6 +91,7 @@ class DB():
         except Exception as e:
             print(f"Error: {e}")
             return {"status": "error 500", "message": str(e)}
+
     
     # def update_product_by_id(self, id: int, img_src: str, price: int, weight: int):
     #     databaseProduct = self.get_product_by_id(id)

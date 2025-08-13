@@ -4,17 +4,20 @@ import Button from "../../Button/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 
-import {CartItem, Product} from "../../../types";
+import {addProductToCart, removeProductFromCart} from "../../../store/reducers/CartSlice";
+
+import {CartItem} from "../../../types";
 
 import "./CartProduct.css";
+import {useAppDispatch} from "../../../hooks/redux";
 
 interface CartProductProps {
     cartItem: CartItem;
-    removeProductFromCart: (product: Product) => void;
-    addProductToCart: (product: Product) => void;
 }
 
-const CartProduct: FC<CartProductProps> = ({cartItem, removeProductFromCart, addProductToCart}) => {
+const CartProduct: FC<CartProductProps> = ({cartItem}) => {
+    const dispatch = useAppDispatch();
+
     return (
         <div className="cart_product_container">
             <img className="cart_product_img" src={cartItem.product.img_src} alt=""/>
@@ -26,11 +29,11 @@ const CartProduct: FC<CartProductProps> = ({cartItem, removeProductFromCart, add
                 </div>
             </div>
             <div className="product_count_change_container">
-                <Button className="product_count_remove_button" onClick={() => removeProductFromCart(cartItem.product)}>
+                <Button className="product_count_remove_button" onClick={() => dispatch(removeProductFromCart(cartItem.product))}>
                     <FontAwesomeIcon icon={faMinus}/>
                 </Button>
                 <span className="product_count">{cartItem.count}</span>
-                <Button className="product_count_add_button" onClick={() => addProductToCart(cartItem.product)}>
+                <Button className="product_count_add_button" onClick={() => dispatch(addProductToCart(cartItem.product))}>
                     <FontAwesomeIcon icon={faPlus}/>
                 </Button>
             </div>

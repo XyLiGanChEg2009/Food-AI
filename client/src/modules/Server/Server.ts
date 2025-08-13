@@ -6,11 +6,6 @@ export class Server {
         this.HOST = "http://127.0.0.1:1337/";
     }
 
-    async getProducts(query: string): Promise<Product[]> {
-        const res = await fetch(this.HOST + "get_products?query=" + query);
-        return res.json();
-    }
-
     async addProduct(product: Product): Promise<Response> {
         try {
             const res = await fetch(this.HOST + "add_product", {
